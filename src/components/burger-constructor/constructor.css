@@ -1,0 +1,52 @@
+.constructor_section {
+  display: flex;
+  flex-direction: column;
+  min-width: 568px;
+  max-height: 600px;
+}
+
+.constructor_content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+
+.constructor_element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 32px;
+}
+
+.constructor_element_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1 1 auto;
+  max-height: 464px;
+  overflow: auto;
+}
+
+.constructor_list_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_icon {
+  width: 32px;
+}
+
+.costructor_total {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  align-self: end;
+}
+
+.costructor_total_cost {
+  display: flex;
+  align-items: center;
+}
