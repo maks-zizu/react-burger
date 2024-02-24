@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   CurrencyIcon,
   DragIcon,
@@ -6,8 +7,12 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import './constructor.css';
+import Modal from '../burger-main/Modal';
+import OrderDetails from '../order-details/OrderDetails';
 
 function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const bun = selectedIngredients.find(
     (ingredient) => ingredient.type === 'bun'
   );
@@ -26,8 +31,14 @@ function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
     0
   );
 
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
-    <section className="constructor_section pr-4 pl-4">
+    <section
+      className="constructor_section pr-4 pl-4"
+      style={{ overflow: 'hidden' }}
+    >
       <div className="constructor_content">
         {bun && (
           <div className="constructor_element">
@@ -42,12 +53,11 @@ function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
         )}
         <div className="constructor_element_list">
           {otherIngredients.map((ingredient) => (
-            <div className="constructor_list_item">
+            <div className="constructor_list_item" key={ingredient._id}>
               <div className="item_icon">
                 <DragIcon />
               </div>
               <ConstructorElement
-                key={ingredient._id}
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
@@ -75,12 +85,35 @@ function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
           </p>
           <CurrencyIcon />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={openModal}
+        >
           Оформить заказ
         </Button>
+        {isModalOpen && (
+          <Modal onClose={closeModal}>
+            <OrderDetails />
+          </Modal>
+        )}
       </div>
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  selectedIngredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  setSelectedIngredients: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;

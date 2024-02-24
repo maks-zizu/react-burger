@@ -19,6 +19,24 @@
   overflow: auto;
 }
 
+.ingredients_list {
+  display: flex;
+  justify-content: start;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: 600px;
+  max-height: 756px;
+}
+
+.ingredients_list_items {
+  display: flex;
+  justify-content: start;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: 600px;
+  max-height: 756px;
+}
+
 .ingredient_item {
   position: relative;
   width: 272px;
