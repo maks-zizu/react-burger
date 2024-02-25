@@ -14,7 +14,7 @@ export interface IIngredient {
 }
 
 export interface IngredientsServerData {
-  IngredientsData: IIngredient[] | [];
+  ingredientsData: IIngredient[] | [];
   loading: boolean;
   err: string | null;
 }

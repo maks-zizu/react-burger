@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   CurrencyIcon,
@@ -7,18 +7,22 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import './constructor.css';
-import Modal from '../burger-main/Modal';
+import Modal from '../modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
 
 function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const bun = selectedIngredients.find(
-    (ingredient) => ingredient.type === 'bun'
+  const bun = useMemo(
+    () => selectedIngredients.find((ingredient) => ingredient.type === 'bun'),
+    [selectedIngredients]
   );
-  const otherIngredients = selectedIngredients.filter(
-    (ingredient) => ingredient.type !== 'bun'
+
+  const otherIngredients = useMemo(
+    () => selectedIngredients.filter((ingredient) => ingredient.type !== 'bun'),
+    [selectedIngredients]
   );
+
   const handleDelete = (id) => {
     const updatedIngredients = selectedIngredients.filter(
       (ingredient) => ingredient._id !== id
@@ -26,19 +30,20 @@ function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
     setSelectedIngredients(updatedIngredients);
   };
 
-  const totalCost = selectedIngredients.reduce(
-    (acc, ingredient) => acc + ingredient.price,
-    0
+  const totalCost = useMemo(
+    () =>
+      selectedIngredients.reduce(
+        (acc, ingredient) => acc + ingredient.price,
+        0
+      ),
+    [selectedIngredients]
   );
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
   return (
-    <section
-      className="constructor_section pr-4 pl-4"
-      style={{ overflow: 'hidden' }}
-    >
+    <section className="constructor_section pr-4 pl-4">
       <div className="constructor_content">
         {bun && (
           <div className="constructor_element">

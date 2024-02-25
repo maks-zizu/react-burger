@@ -6,7 +6,7 @@ import {
   Tab,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import './ingredients.css';
-import Modal from '../burger-main/Modal';
+import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 function BurgerIngredients({ addIngredient, ingredients }) {
@@ -61,7 +61,7 @@ function BurgerIngredients({ addIngredient, ingredients }) {
       <div className="ingredients_lists">
         <div ref={bunsRef} className="ingredients_list pt-10">
           <p className="text text_type_main-medium">Булки</p>
-          <div className="ingredients_list_items ml-4">
+          <div className="ingredients_list_items">
             {ingredients
               .filter((ingredient) => ingredient.type === 'bun')
               .map((bun) => (
@@ -87,7 +87,7 @@ function BurgerIngredients({ addIngredient, ingredients }) {
         </div>
         <div ref={saucesRef} className="ingredients_list pt-10">
           <p className="text text_type_main-medium">Соусы</p>
-          <div className="ingredients_list_items ml-4">
+          <div className="ingredients_list_items">
             {ingredients
               .filter((ingredient) => ingredient.type === 'sauce')
               .map((sauce) => (
@@ -115,7 +115,7 @@ function BurgerIngredients({ addIngredient, ingredients }) {
         </div>
         <div ref={mainsRef} className="ingredients_list pt-10">
           <p className="text text_type_main-medium">Начинки</p>
-          <div className="ingredients_list_items ml-4">
+          <div className="ingredients_list_items">
             {ingredients
               .filter((ingredient) => ingredient.type === 'main')
               .map((main) => (

@@ -4,25 +4,44 @@ import AppHeader from './components/app-header/AppHeader';
 import BurgerMain from './components/burger-main/BurgerMain';
 import { IngredientsServerData } from './types';
 
-export const URL = 'https://norma.nomoreparties.space/api/ingredients';
+const URL = 'https://norma.nomoreparties.space/api/ingredients';
+
+const fetchIngredients = async () => {
+  try {
+    const res = await fetch(URL);
+    if (!res.ok) {
+      throw new Error(
+        `Ответ сети был не ok. Статус ответа сервера: ${res.status}`
+      );
+    }
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 function App(): ReactElement {
-  const [state, setState] = useState<IngredientsServerData>({
-    IngredientsData: [],
+  const [ingredients, setIngredients] = useState<IngredientsServerData>({
+    ingredientsData: [],
     loading: true,
     err: null,
   });
 
   useEffect(() => {
     const getIngredientsData = async () => {
-      setState({ ...state, loading: true });
+      setIngredients({ ...ingredients, loading: true });
       try {
-        const res = await fetch(URL);
-        const data = await res.json();
-        setState({ ...state, IngredientsData: data.data, loading: false });
+        const ingredientsData = await fetchIngredients();
+        setIngredients({
+          ...ingredients,
+          ingredientsData: ingredientsData,
+          loading: false,
+        });
       } catch (error) {
-        setState({
-          IngredientsData: [],
+        setIngredients({
+          ...ingredients,
+          ingredientsData: [],
           loading: false,
           err: (error as Error)?.message as string,
         });
@@ -34,7 +53,7 @@ function App(): ReactElement {
   return (
     <div className="App">
       <AppHeader />
-      <BurgerMain ingredients={state.IngredientsData} />
+      <BurgerMain ingredients={ingredients.ingredientsData} />
     </div>
   );
 }
