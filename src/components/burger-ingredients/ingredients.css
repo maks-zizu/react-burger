@@ -1,0 +1,47 @@
+.ingredients_section {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 600px;
+}
+
+.tabs {
+  display: flex;
+}
+
+.ingredients_lists {
+  display: grid;
+  grid-template-columns: repeat(1, 600px);
+  grid-auto-rows: auto;
+  gap: 24px;
+  max-height: 756px;
+  overflow: auto;
+}
+
+.ingredients_list {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  gap: 24px;
+}
+
+.ingredients_list > p {
+  justify-self: start;
+}
+
+.ingredients_list_items {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(2, 272px);
+  grid-auto-rows: auto;
+  gap: 24px;
+}
+
+.ingredient_item {
+  position: relative;
+}
+
+.ingredients_price {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}

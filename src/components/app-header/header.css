@@ -1,0 +1,34 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #1c1c21;
+  color: #8585ad;
+}
+
+.header__content {
+  display: flex;
+  width: 1280px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__menu {
+  display: flex;
+  gap: 8px;
+}
+
+.header__link {
+  text-decoration: none;
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  color: #8585ad;
+  background-color: #1c1c21;
+}
+
+.header__link_active {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  color: #f2f2f3;
+}
