@@ -1,50 +1,74 @@
-import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
 import {
   CurrencyIcon,
-  DragIcon,
   ConstructorElement,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import './constructor.css';
 import Modal from '../modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
+import { useAppDispatch } from '../../services/store';
+import { useSelector } from 'react-redux';
+import {
+  constructorBunAdd,
+  constructorOtherAdd,
+  constructorOtherDel,
+  constructorOtherMove,
+} from '../../services/constructorIngredientsSlice';
+import { useDrop } from 'react-dnd';
+import ConstructorItem from './ConstructorItem';
+import useOrderModal from '../../hooks/useOrderModal';
 
-function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const bun = useMemo(
-    () => selectedIngredients.find((ingredient) => ingredient.type === 'bun'),
-    [selectedIngredients]
+function BurgerConstructor() {
+  const dispatch = useAppDispatch();
+  const { bun, otherIngredients } = useSelector(
+    (store) => store.constructorIngredients
   );
 
-  const otherIngredients = useMemo(
-    () => selectedIngredients.filter((ingredient) => ingredient.type !== 'bun'),
-    [selectedIngredients]
-  );
+  const { isModalOpen, openModal, closeModal } = useOrderModal();
 
-  const handleDelete = (id) => {
-    const updatedIngredients = selectedIngredients.filter(
-      (ingredient) => ingredient._id !== id
-    );
-    setSelectedIngredients(updatedIngredients);
+  const handleDelete = (uniqueId) => {
+    dispatch(constructorOtherDel(uniqueId));
   };
 
-  const totalCost = useMemo(
-    () =>
-      selectedIngredients.reduce(
-        (acc, ingredient) => acc + ingredient.price,
-        0
-      ),
-    [selectedIngredients]
-  );
+  const totalCost = useMemo(() => {
+    return (
+      (bun ? bun.price * 2 : 0) +
+      otherIngredients.reduce((acc, ingredient) => acc + ingredient.price, 0)
+    );
+  }, [otherIngredients, bun]);
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: 'ingredient',
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      if (ingredient.type === 'bun') dispatch(constructorBunAdd(ingredient));
+      else dispatch(constructorOtherAdd(ingredient));
+    },
+  });
+
+  const [, dropRef] = useDrop({
+    accept: 'item',
+    drop: (item, monitor) => {
+      const clientOffset = monitor.getClientOffset();
+      const clientY = clientOffset ? clientOffset.y : 0;
+      const hoverTop = bun ? 240 : 140;
+      const hoverClientY = clientY - hoverTop;
+      const itemHeight = 96;
+      const hoverIndex = Math.floor(hoverClientY / itemHeight);
+      if (item.index !== hoverIndex) {
+        dispatch(
+          constructorOtherMove({ fromIndex: item.index, toIndex: hoverIndex })
+        );
+      }
+    },
+  });
 
   return (
     <section className="constructor_section pr-4 pl-4">
-      <div className="constructor_content">
+      <div className="constructor_content" ref={dropTarget}>
         {bun && (
           <div className="constructor_element">
             <ConstructorElement
@@ -56,20 +80,16 @@ function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
             />
           </div>
         )}
-        <div className="constructor_element_list">
-          {otherIngredients.map((ingredient) => (
-            <div className="constructor_list_item" key={ingredient._id}>
-              <div className="item_icon">
-                <DragIcon />
-              </div>
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-                handleClose={() => handleDelete(ingredient._id)}
+        <div className="constructor_element_list" ref={dropRef}>
+          {otherIngredients &&
+            otherIngredients.map((ingredient, index) => (
+              <ConstructorItem
+                ingredient={ingredient}
+                key={ingredient.uniqueId}
+                handleDelete={handleDelete}
+                index={index}
               />
-            </div>
-          ))}
+            ))}
         </div>
         {bun && (
           <div className="constructor_element">
@@ -107,18 +127,5 @@ function BurgerConstructor({ selectedIngredients, setSelectedIngredients }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  selectedIngredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  setSelectedIngredients: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

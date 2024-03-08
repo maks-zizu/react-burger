@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './ingredientDetails.css';
+import useModal from '../../hooks/useModal';
 
-function IngredientDetails({ ingredient }) {
+function IngredientDetails() {
+  const { ingredient } = useModal();
   return (
     <div className="ingredient_details">
       <img
@@ -48,22 +49,5 @@ function IngredientDetails({ ingredient }) {
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-  }).isRequired,
-};
 
 export default IngredientDetails;

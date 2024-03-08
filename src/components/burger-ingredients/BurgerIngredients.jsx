@@ -1,36 +1,38 @@
-import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Counter,
-  CurrencyIcon,
-  Tab,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useCallback, useMemo } from 'react';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import './ingredients.css';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+import IngredientsList from './IngredientsList';
+import useModal from '../../hooks/useModal';
+import { filterIngredientsByType } from './utils';
+import { useSelector } from 'react-redux';
+import useTabNavigation from '../../hooks/useTabNavigation';
 
-function BurgerIngredients({ addIngredient, ingredients }) {
-  const [currentIngredient, setCurrentIngredient] = useState(null);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [current, setCurrent] = useState('bun');
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const mainsRef = useRef(null);
+function BurgerIngredients() {
+  const ingredients = useSelector((store) => store.ingredients.ingredientsData);
+  const { current, scrollToSection, setRef } = useTabNavigation('bun');
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const scrollToSection = (sectionType) => {
-    setCurrent(sectionType);
-    const sectionRef = { bun: bunsRef, sauce: saucesRef, main: mainsRef }[
-      sectionType
-    ];
-    sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  const bunIngredients = useMemo(
+    () => filterIngredientsByType(ingredients, 'bun'),
+    [ingredients]
+  );
+  const sauceIngredients = useMemo(
+    () => filterIngredientsByType(ingredients, 'sauce'),
+    [ingredients]
+  );
+  const mainIngredients = useMemo(
+    () => filterIngredientsByType(ingredients, 'main'),
+    [ingredients]
+  );
 
-  const handleIngredientClick = (ingredient) => {
-    setCurrentIngredient(ingredient);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => setModalOpen(false);
+  const handleIngredientClick = useCallback(
+    (ingredient) => {
+      openModal(ingredient);
+    },
+    [openModal]
+  );
 
   return (
     <section className="ingredients_section">
@@ -59,110 +61,32 @@ function BurgerIngredients({ addIngredient, ingredients }) {
         </Tab>
       </div>
       <div className="ingredients_lists">
-        <div ref={bunsRef} className="ingredients_list pt-10">
-          <p className="text text_type_main-medium">Булки</p>
-          <div className="ingredients_list_items">
-            {ingredients
-              .filter((ingredient) => ingredient.type === 'bun')
-              .map((bun) => (
-                <div
-                  key={bun._id}
-                  className="ingredient_item mt-10"
-                  onClick={() => addIngredient(bun)}
-                >
-                  <Counter count={1} size="default" />
-                  <img
-                    src={bun.image}
-                    alt={bun.name}
-                    onClick={() => handleIngredientClick(bun)}
-                  />
-                  <div className="ingredients_price m-1">
-                    <p className="text text_type_digits-default">{bun.price}</p>
-                    <CurrencyIcon />
-                  </div>
-                  <p className="text text_type_main-default">{bun.name}</p>
-                </div>
-              ))}
-          </div>
-        </div>
-        <div ref={saucesRef} className="ingredients_list pt-10">
-          <p className="text text_type_main-medium">Соусы</p>
-          <div className="ingredients_list_items">
-            {ingredients
-              .filter((ingredient) => ingredient.type === 'sauce')
-              .map((sauce) => (
-                <div
-                  key={sauce._id}
-                  className="ingredient_item mt-10"
-                  onClick={() => addIngredient(sauce)}
-                >
-                  <Counter count={1} size="default" />
-                  <img
-                    src={sauce.image}
-                    alt={sauce.name}
-                    onClick={() => handleIngredientClick(sauce)}
-                  />
-                  <div className="ingredients_price m-1">
-                    <p className="text text_type_digits-default">
-                      {sauce.price}
-                    </p>
-                    <CurrencyIcon />
-                  </div>
-                  <p className="text text_type_main-default">{sauce.name}</p>
-                </div>
-              ))}
-          </div>
-        </div>
-        <div ref={mainsRef} className="ingredients_list pt-10">
-          <p className="text text_type_main-medium">Начинки</p>
-          <div className="ingredients_list_items">
-            {ingredients
-              .filter((ingredient) => ingredient.type === 'main')
-              .map((main) => (
-                <div
-                  key={main._id}
-                  className="ingredient_item mt-10"
-                  onClick={() => addIngredient(main)}
-                >
-                  <Counter count={1} size="default" />
-                  <img
-                    src={main.image}
-                    alt={main.name}
-                    onClick={() => handleIngredientClick(main)}
-                  />
-                  <div className="ingredients_price m-1">
-                    <p className="text text_type_digits-default">
-                      {main.price}
-                    </p>
-                    <CurrencyIcon />
-                  </div>
-                  <p className="text text_type_main-default">{main.name}</p>
-                </div>
-              ))}
-          </div>
-        </div>
+        <IngredientsList
+          listRef={setRef('bun')}
+          type="Булки"
+          ingredients={bunIngredients}
+          handleIngredientClick={handleIngredientClick}
+        />
+        <IngredientsList
+          listRef={setRef('sauce')}
+          type="Соусы"
+          ingredients={sauceIngredients}
+          handleIngredientClick={handleIngredientClick}
+        />
+        <IngredientsList
+          listRef={setRef('main')}
+          type="Начинки"
+          ingredients={mainIngredients}
+          handleIngredientClick={handleIngredientClick}
+        />
       </div>
       {isModalOpen && (
         <Modal title="Детали ингредиента" onClose={closeModal}>
-          <IngredientDetails ingredient={currentIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  addIngredient: PropTypes.func.isRequired,
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string,
-    })
-  ).isRequired,
-};
 
 export default BurgerIngredients;
