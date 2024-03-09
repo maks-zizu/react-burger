@@ -111,6 +111,7 @@ function BurgerConstructor() {
           <CurrencyIcon />
         </div>
         <Button
+          disabled={!otherIngredients.length && !bun}
           htmlType="button"
           type="primary"
           size="large"

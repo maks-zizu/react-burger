@@ -2,7 +2,7 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -58,4 +58,4 @@ Ingredient.propTypes = {
   handleIngredientClick: PropTypes.func.isRequired,
 };
 
-export default Ingredient;
+export default memo(Ingredient);

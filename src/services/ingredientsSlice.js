@@ -11,7 +11,7 @@ export const ingredientsInit = createAsyncThunk(
   'ingredients/init',
   async () => {
     const res = await api.getIngredients();
-    return res;
+    return res.data;
   }
 );
 
@@ -30,7 +30,9 @@ const ingredientsSlice = createSlice({
         state.loading = false;
       })
       .addCase(ingredientsInit.rejected, (state, action) => {
-        state.err = action.error ? action.error.message : 'ошибка сервера';
+        state.err = action.error
+          ? action.error.message
+          : 'Ошибка загрузки ингредиентов';
         state.loading = false;
       });
   },

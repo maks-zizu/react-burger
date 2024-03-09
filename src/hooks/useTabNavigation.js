@@ -8,15 +8,18 @@ function useTabNavigation(initialTab) {
     setCurrent(sectionType);
     const sectionElement = sectionRefs.current[sectionType];
     if (sectionElement) {
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
+      sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, []);
 
-  const setRef = (sectionType) => (element) => {
-    sectionRefs.current[sectionType] = element;
-  };
+  const setRef = useCallback(
+    (sectionType) => (element) => {
+      sectionRefs.current[sectionType] = element;
+    },
+    []
+  );
 
-  return { current, scrollToSection, setRef };
+  return { current, scrollToSection, setRef, setCurrent, sectionRefs };
 }
 
 export default useTabNavigation;

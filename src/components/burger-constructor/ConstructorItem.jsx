@@ -31,7 +31,7 @@ function ConstructorItem({ ingredient, index, handleDelete }) {
 
 ConstructorItem.propTypes = {
   ingredient: PropTypes.shape({
-    uniqueId: PropTypes.string.isRequired,
+    uniqueId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,

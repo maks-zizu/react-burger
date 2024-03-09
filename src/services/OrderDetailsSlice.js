@@ -36,7 +36,9 @@ const orderDetailsSlice = createSlice({
         state.loading = false;
       })
       .addCase(orderDetailsAdd.rejected, (state, action) => {
-        state.err = action.error ? action.error.message : 'ошибка сервера';
+        state.err = action.error
+          ? action.error.message
+          : 'Ошибка оформления заказа';
         state.loading = false;
       });
   },
