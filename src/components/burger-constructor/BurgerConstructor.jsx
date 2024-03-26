@@ -1,23 +1,23 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import {
   CurrencyIcon,
   ConstructorElement,
   Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import './constructor.css';
-import Modal from '../modal/Modal';
-import OrderDetails from '../order-details/OrderDetails';
-import { useAppDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import "./constructor.css";
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
+import { useAppDispatch } from "../../services/store";
+import { useSelector } from "react-redux";
 import {
   constructorBunAdd,
   constructorOtherAdd,
   constructorOtherDel,
   constructorOtherMove,
-} from '../../services/constructorIngredientsSlice';
-import { useDrop } from 'react-dnd';
-import ConstructorItem from './ConstructorItem';
-import useOrderModal from '../../hooks/useOrderModal';
+} from "../../services/constructorIngredientsSlice";
+import { useDrop } from "react-dnd";
+import ConstructorItem from "./ConstructorItem";
+import useOrderModal from "../../hooks/useOrderModal";
 
 function BurgerConstructor() {
   const dispatch = useAppDispatch();
@@ -39,18 +39,18 @@ function BurgerConstructor() {
   }, [otherIngredients, bun]);
 
   const [{ isHover }, dropTarget] = useDrop({
-    accept: 'ingredient',
+    accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop(ingredient) {
-      if (ingredient.type === 'bun') dispatch(constructorBunAdd(ingredient));
+      if (ingredient.type === "bun") dispatch(constructorBunAdd(ingredient));
       else dispatch(constructorOtherAdd(ingredient));
     },
   });
 
   const [, dropRef] = useDrop({
-    accept: 'item',
+    accept: "item",
     drop: (item, monitor) => {
       const clientOffset = monitor.getClientOffset();
       const clientY = clientOffset ? clientOffset.y : 0;
