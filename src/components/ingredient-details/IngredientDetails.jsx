@@ -1,9 +1,21 @@
-import React from 'react';
-import './ingredientDetails.css';
-import useModal from '../../hooks/useModal';
+import React, { useEffect, useState } from "react";
+import "./ingredientDetails.css";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 function IngredientDetails() {
-  const { ingredient } = useModal();
+  const { id } = useParams();
+  const [ingredient, setIngredient] = useState(null);
+  const ingredients = useSelector((store) => store.ingredients.ingredientsData);
+
+  useEffect(() => {
+    setIngredient(ingredients.find(({ _id }) => _id === id));
+  }, [ingredients]);
+
+  if (!ingredient) {
+    return null;
+  }
+
   return (
     <div className="ingredient_details">
       <img

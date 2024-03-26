@@ -1,6 +1,6 @@
-import { request } from './utils';
+import { request } from "./utils";
 
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export const getIngredients = async () => {
   return request(`${BASE_URL}/ingredients`);
@@ -8,9 +8,10 @@ export const getIngredients = async () => {
 
 export const addOrder = async (ingredients) => {
   return request(`${BASE_URL}/orders`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("accessToken"),
     },
     body: JSON.stringify({ ingredients }),
   });

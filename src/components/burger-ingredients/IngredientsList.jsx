@@ -1,22 +1,13 @@
-import PropTypes from 'prop-types';
-import Ingredient from './Ingredient';
+import PropTypes from "prop-types";
+import Ingredient from "./Ingredient";
 
-function IngredientsList({
-  type,
-  ingredients,
-  handleIngredientClick,
-  listRef,
-}) {
+function IngredientsList({ type, ingredients, listRef }) {
   return (
     <div ref={listRef} className="ingredients_list pt-10">
       <p className="text text_type_main-medium">{type}</p>
       <div className="ingredients_list_items">
-        {ingredients.map((ingredient, index) => (
-          <Ingredient
-            key={ingredient._id + index}
-            ingredient={ingredient}
-            handleIngredientClick={handleIngredientClick}
-          />
+        {ingredients.map((ingredient) => (
+          <Ingredient key={ingredient._id} ingredient={ingredient} />
         ))}
       </div>
     </div>
@@ -34,7 +25,6 @@ IngredientsList.propTypes = {
       price: PropTypes.number.isRequired,
     })
   ).isRequired,
-  handleIngredientClick: PropTypes.func.isRequired,
   listRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
