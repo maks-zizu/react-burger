@@ -6,7 +6,7 @@ import {
   orderDetailsDel,
 } from "../services/OrderDetailsSlice";
 import { constructorOtherAllDel } from "../services/constructorIngredientsSlice";
-import { useAuth } from "../components/auth/auth";
+import { useAuth } from "../services/auth/auth";
 import { useNavigate } from "react-router-dom";
 
 function useOrderModal() {

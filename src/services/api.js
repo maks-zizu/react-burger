@@ -1,6 +1,5 @@
+import { BASE_URL } from "./template";
 import { request } from "./utils";
-
-const BASE_URL = "https://norma.nomoreparties.space/api";
 
 export const getIngredients = async () => {
   return request(`${BASE_URL}/ingredients`);

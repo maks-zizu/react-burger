@@ -1,41 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./styles/auth.css";
-import { useAuth } from "./auth";
+import authStyle from "./styles/auth.module.css";
+import { useAuth } from "../services/auth/auth";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { user, signIn } = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const onHadleSubmit = async (e) => {
     e.preventDefault();
     await signIn({ email, password });
   };
   const linkToForgotPassword = () => {
-    navigate("/forgot-password");
+    navigate("/forgot-password", { state: { from: location } });
   };
   const linkToRegistration = () => {
-    navigate("/register");
+    navigate("/register", { state: { from: location } });
   };
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, from, navigate]);
 
   return (
-    <div className="auth_content">
-      <div className="auth_form-container">
-        <form onSubmit={onHadleSubmit} className="auth_form mb-20">
+    <div className={authStyle.auth_content}>
+      <div className={authStyle["auth_form-container"]}>
+        <form
+          onSubmit={onHadleSubmit}
+          className={`${authStyle.auth_form} mb-20`}
+        >
           <p className="text text_type_main-medium">Вход</p>
           <EmailInput
             value={email}
@@ -52,8 +58,8 @@ function Login() {
             Войти
           </Button>
         </form>
-        <div className="auth_additional">
-          <div className="auth_additional-text">
+        <div className={authStyle.auth_additional}>
+          <div className={authStyle["auth_additional-text"]}>
             <p className="text text_type_main-default text_color_inactive">
               Вы — новый пользователь?
             </p>
@@ -66,7 +72,7 @@ function Login() {
               Зарегистрироваться
             </Button>
           </div>
-          <div className="auth_additional-text">
+          <div className={authStyle["auth_additional-text"]}>
             <p className="text text_type_main-default text_color_inactive">
               Забыли пароль?
             </p>

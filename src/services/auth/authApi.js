@@ -1,4 +1,5 @@
-const BASE_URL = "https://norma.nomoreparties.space/api";
+import { BASE_URL } from "../template";
+
 const AUTH_URL = `${BASE_URL}/auth`;
 
 export const loginRequest = async (loginForm) => {

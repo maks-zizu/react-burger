@@ -5,8 +5,8 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./styles/profile.css";
-import { useAuth } from "../auth/auth";
+import profileStyle from "./styles/profile.module.css";
+import { useAuth } from "../../services/auth/auth";
 
 function Profile() {
   const { user, updateUserData } = useAuth();
@@ -41,9 +41,12 @@ function Profile() {
   };
 
   return (
-    <div className="profile_content">
-      <div className="profile_form-container">
-        <form onSubmit={onHadleSubmit} className="profile_form mb-20">
+    <div className={profileStyle.profile_content}>
+      <div className={profileStyle["profile_form-container"]}>
+        <form
+          onSubmit={onHadleSubmit}
+          className={`${profileStyle.profile_form} mb-20`}
+        >
           <Input
             value={name}
             name={"name"}
@@ -70,7 +73,7 @@ function Profile() {
             icon="EditIcon"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div className="profile_form-buttons">
+          <div className={profileStyle["profile_form-buttons"]}>
             <Button
               onClick={onHadleReset}
               htmlType="reset"

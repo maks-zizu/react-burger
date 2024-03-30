@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as api from './api';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as api from "./api";
 
 export const initialState = {
   orderDetailsData: {},
@@ -8,7 +8,7 @@ export const initialState = {
 };
 
 export const orderDetailsAdd = createAsyncThunk(
-  'orderDetails/add',
+  "orderDetails/add",
   async (order) => {
     const res = await api.addOrder(order);
     return res;
@@ -16,7 +16,7 @@ export const orderDetailsAdd = createAsyncThunk(
 );
 
 const orderDetailsSlice = createSlice({
-  name: 'orderDetails',
+  name: "orderDetails",
   initialState,
   reducers: {
     orderDetailsDel: (state) => {
@@ -38,7 +38,7 @@ const orderDetailsSlice = createSlice({
       .addCase(orderDetailsAdd.rejected, (state, action) => {
         state.err = action.error
           ? action.error.message
-          : 'Ошибка оформления заказа';
+          : "Ошибка оформления заказа";
         state.loading = false;
       });
   },

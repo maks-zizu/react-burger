@@ -1,33 +1,38 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   PasswordInput,
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./styles/auth.css";
-import { useAuth } from "./auth";
+import authStyle from "./styles/auth.module.css";
+import { useAuth } from "../services/auth/auth";
 
 function ResetPassword() {
   const { resetPass } = useAuth();
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const linkToLogin = () => {
-    navigate("/login");
+    navigate("/login", { state: { from: location } });
   };
 
   const onHadleSubmit = async (e) => {
     e.preventDefault();
     const isSend = await resetPass({ token, password });
-    if (isSend) navigate("/login");
+    if (isSend) linkToLogin();
   };
 
   return (
-    <div className="auth_content">
-      <div className="auth_form-container">
-        <form onSubmit={onHadleSubmit} className="auth_form mb-20">
+    <div className={authStyle.auth_content}>
+      <div className={authStyle["auth_form-container"]}>
+        <form
+          onSubmit={onHadleSubmit}
+          className={`${authStyle.auth_form} mb-20`}
+        >
           <p className="text text_type_main-medium">Восстановление пароля</p>
           <PasswordInput
             value={password}
@@ -45,8 +50,8 @@ function ResetPassword() {
             Сохранить
           </Button>
         </form>
-        <div className="auth_additional">
-          <div className="auth_additional-text">
+        <div className={authStyle.auth_additional}>
+          <div className={authStyle["auth_additional-text"]}>
             <p className="text text_type_main-default text_color_inactive">
               Вспомнили пароль?
             </p>

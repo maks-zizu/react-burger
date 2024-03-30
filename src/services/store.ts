@@ -1,16 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
-import ingredientsSlice from './ingredientsSlice';
-import constructorIngredientsSlice from './constructorIngredientsSlice';
-import ingredientDetailsSlice from './ingredientDetailsSlice';
-import OrderDetailsSlice from './OrderDetailsSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import ingredientsSlice from "./ingredientsSlice";
+import constructorIngredientsSlice from "./constructorIngredientsSlice";
+import ingredientDetailsSlice from "./ingredientDetailsSlice";
+import orderDetailsSlice from "./OrderDetailsSlice";
 
 const store = configureStore({
   reducer: {
     ingredients: ingredientsSlice,
     constructorIngredients: constructorIngredientsSlice,
     ingredientDetails: ingredientDetailsSlice,
-    OrderDetails: OrderDetailsSlice,
+    OrderDetails: orderDetailsSlice,
   },
 });
 

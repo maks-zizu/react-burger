@@ -6,13 +6,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import store from "./services/store";
 import { Provider } from "react-redux";
-import { ProvideAuth } from "./components/auth/auth";
+import { SnackbarProvider } from "notistack";
+import { ProvideAuth } from "./services/auth/auth";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <SnackbarProvider />
     <BrowserRouter>
       <ProvideAuth>
         <Provider store={store}>

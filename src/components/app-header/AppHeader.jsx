@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
@@ -6,18 +6,22 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import useNavLink from "../../hooks/useNavLink";
-import "./header.css";
+import headerStyle from "./header.module.css";
 
 function AppHeader() {
   const { getIconType, isProfileActive } = useNavLink();
+  const location = useLocation();
   return (
-    <header className="header">
-      <div className="header__content">
-        <nav className="header__menu">
+    <header className={headerStyle.header}>
+      <div className={headerStyle.header__content}>
+        <nav className={headerStyle.header__menu}>
           <NavLink
             to="/"
+            state={{ from: location }}
             className={({ isActive }) =>
-              isActive ? "header__link header__link_active" : "header__link"
+              isActive
+                ? `${headerStyle.header__link} ${headerStyle.header__link_active}`
+                : `${headerStyle.header__link}`
             }
           >
             <BurgerIcon type={getIconType("/")} />
@@ -25,8 +29,11 @@ function AppHeader() {
           </NavLink>
           <NavLink
             to="/orders"
+            state={{ from: location }}
             className={({ isActive }) =>
-              isActive ? "header__link header__link_active" : "header__link"
+              isActive
+                ? `${headerStyle.header__link} ${headerStyle.header__link_active}`
+                : `${headerStyle.header__link}`
             }
           >
             <ListIcon type={getIconType("/orders")} />
@@ -36,8 +43,11 @@ function AppHeader() {
         <Logo />
         <NavLink
           to="/profile"
+          state={{ from: location }}
           className={({ isActive }) =>
-            isActive ? "header__link header__link_active" : "header__link"
+            isActive
+              ? `${headerStyle.header__link} ${headerStyle.header__link_active}`
+              : `${headerStyle.header__link}`
           }
         >
           <ProfileIcon type={isProfileActive} />

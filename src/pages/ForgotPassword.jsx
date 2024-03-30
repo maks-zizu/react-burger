@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./styles/auth.css";
-import { useAuth } from "./auth";
+import authStyle from "./styles/auth.module.css";
+import { useAuth } from "../services/auth/auth";
 
 function ForgotPassword() {
   const { forgotPass } = useAuth();
   const [email, setEmail] = useState("");
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onHadleSubmit = async (e) => {
     e.preventDefault();
     const isSend = await forgotPass({ email });
-    if (isSend) navigate("/reset-password");
+    if (isSend) navigate("/reset-password", { state: { from: location } });
   };
 
   const linkToLogin = () => {
-    navigate("/login");
+    navigate("/login", { state: { from: location } });
   };
 
   return (
-    <div className="auth_content">
-      <div className="auth_form-container">
-        <form onSubmit={onHadleSubmit} className="auth_form mb-20">
+    <div className={authStyle.auth_content}>
+      <div className={authStyle["auth_form-container"]}>
+        <form
+          onSubmit={onHadleSubmit}
+          className={`${authStyle.auth_form} mb-20`}
+        >
           <p className="text text_type_main-medium">Восстановление пароля</p>
           <EmailInput
             value={email}
@@ -37,8 +42,8 @@ function ForgotPassword() {
             Восстановить
           </Button>
         </form>
-        <div className="auth_additional">
-          <div className="auth_additional-text">
+        <div className={authStyle.auth_additional}>
+          <div className={authStyle["auth_additional-text"]}>
             <p className="text text_type_main-default text_color_inactive">
               Вспомнили пароль?
             </p>

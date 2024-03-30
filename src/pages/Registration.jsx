@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   EmailInput,
   PasswordInput,
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./styles/auth.css";
-import { useAuth } from "./auth";
+import authStyle from "./styles/auth.module.css";
+import { useAuth } from "../services/auth/auth";
 
 function Registration() {
   const [name, setName] = useState("");
@@ -16,10 +16,13 @@ function Registration() {
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
 
   let { register, user } = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const linkToLogin = () => {
-    navigate("/login");
+    navigate("/login", { state: { from: location } });
   };
 
   const validateForm = () => {
@@ -60,14 +63,17 @@ function Registration() {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, from, navigate]);
 
   return (
-    <div className="auth_content">
-      <div className="auth_form-container">
-        <form onSubmit={onHadleSubmit} className="auth_form mb-20">
+    <div className={authStyle.auth_content}>
+      <div className={authStyle["auth_form-container"]}>
+        <form
+          onSubmit={onHadleSubmit}
+          className={`${authStyle.auth_form} mb-20`}
+        >
           <p className="text text_type_main-medium">Регистрация</p>
           <Input
             value={name}
@@ -95,8 +101,8 @@ function Registration() {
             Зарегистрироваться
           </Button>
         </form>
-        <div className="auth_additional">
-          <div className="auth_additional-text">
+        <div className={authStyle.auth_additional}>
+          <div className={authStyle["auth_additional-text"]}>
             <p className="text text_type_main-default text_color_inactive">
               Уже зарегистрированы?
             </p>

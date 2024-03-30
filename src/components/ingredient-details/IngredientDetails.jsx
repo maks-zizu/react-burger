@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./ingredientDetails.css";
+import ingredientDetailsStyle from "./ingredientDetails.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -17,15 +17,15 @@ function IngredientDetails() {
   }
 
   return (
-    <div className="ingredient_details">
+    <div className={ingredientDetailsStyle.ingredient_details}>
       <img
         src={ingredient.image_large}
         alt={ingredient.name}
         className="image"
       />
       <p className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</p>
-      <ul className="stats">
-        <li className="statItem">
+      <ul className={ingredientDetailsStyle.stats}>
+        <li className={ingredientDetailsStyle.statItem}>
           <p className="text text_type_main-default text_color_inactive mb-2">
             Калории,ккал
           </p>
@@ -33,7 +33,7 @@ function IngredientDetails() {
             {ingredient.calories}
           </p>
         </li>
-        <li className="statItem">
+        <li className={ingredientDetailsStyle.statItem}>
           <p className="text text_type_main-default text_color_inactive mb-2">
             Белки, г
           </p>
@@ -41,7 +41,7 @@ function IngredientDetails() {
             {ingredient.proteins}
           </p>
         </li>
-        <li className="statItem">
+        <li className={ingredientDetailsStyle.statItem}>
           <p className="text text_type_main-default text_color_inactive mb-2">
             Жиры, г
           </p>
@@ -49,7 +49,7 @@ function IngredientDetails() {
             {ingredient.fat}
           </p>
         </li>
-        <li className="statItem">
+        <li className={ingredientDetailsStyle.statItem}>
           <p className="text text_type_main-default text_color_inactive mb-2">
             Углеводы, г
           </p>

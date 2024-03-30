@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./ingredients.css";
+import ingredientsStyle from "./ingredients.module.css";
 import IngredientsList from "./IngredientsList";
 import { filterIngredientsByType, prepareSections } from "./utils";
 import { useSelector } from "react-redux";
@@ -71,9 +71,9 @@ function BurgerIngredients() {
   }, [setCurrent, sectionRefs]);
 
   return (
-    <section className="ingredients_section">
+    <section className={ingredientsStyle.ingredients_section}>
       <p className="text text_type_main-large">Соберите бургер</p>
-      <div className="tabs">
+      <div className={ingredientsStyle.tabs}>
         {tabs.map((tab) => (
           <Tab
             key={tab.value}
@@ -85,7 +85,7 @@ function BurgerIngredients() {
           </Tab>
         ))}
       </div>
-      <div className="ingredients_lists" ref={ingredientsRef}>
+      <div className={ingredientsStyle.ingredients_lists} ref={ingredientsRef}>
         {sections.map(({ type, ingredients, name }) => (
           <IngredientsList
             key={type}

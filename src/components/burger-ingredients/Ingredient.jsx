@@ -2,6 +2,7 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import ingredientsStyle from "./ingredients.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { memo, useMemo } from "react";
 import { useDrag } from "react-dnd";
@@ -37,7 +38,11 @@ function Ingredient({ ingredient }) {
   const location = useLocation();
 
   return (
-    <div ref={drag} key={ingredient._id} className="ingredient_item mt-10">
+    <div
+      ref={drag}
+      key={ingredient._id}
+      className={`${ingredientsStyle.ingredient_item} mt-10`}
+    >
       <Counter count={countIngredients} size="default" />
       <Link
         key={ingredient._id}
@@ -50,7 +55,7 @@ function Ingredient({ ingredient }) {
           // onClick={() => openModal(ingredient)}
         />
       </Link>
-      <div className="ingredients_price m-1">
+      <div className={`${ingredientsStyle.ingredients_price} m-1`}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
         <CurrencyIcon />
       </div>

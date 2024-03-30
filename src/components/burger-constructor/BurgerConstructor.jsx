@@ -4,7 +4,7 @@ import {
   ConstructorElement,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./constructor.css";
+import constructorStyle from "./constructor.module.css";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import { useAppDispatch } from "../../services/store";
@@ -67,20 +67,23 @@ function BurgerConstructor() {
   });
 
   return (
-    <section className="constructor_section pr-4 pl-4">
-      <div className="constructor_content" ref={dropTarget}>
+    <section className={`${constructorStyle.constructor_section} pr-4 pl-4`}>
+      <div className={constructorStyle.constructor_content} ref={dropTarget}>
         {bun && (
-          <div className="constructor_element">
+          <div className={constructorStyle.constructor_element}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={bun.name}
+              text={`${bun.name} (верх)`}
               price={bun.price}
               thumbnail={bun.image}
             />
           </div>
         )}
-        <div className="constructor_element_list" ref={dropRef}>
+        <div
+          className={constructorStyle.constructor_element_list}
+          ref={dropRef}
+        >
           {otherIngredients &&
             otherIngredients.map((ingredient, index) => (
               <ConstructorItem
@@ -92,19 +95,19 @@ function BurgerConstructor() {
             ))}
         </div>
         {bun && (
-          <div className="constructor_element">
+          <div className={constructorStyle.constructor_element}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={bun.name}
+              text={`${bun.name} (низ)`}
               price={bun.price}
               thumbnail={bun.image}
             />
           </div>
         )}
       </div>
-      <div className="costructor_total pr-4">
-        <div className="costructor_total_cost mr-10">
+      <div className={`${constructorStyle.costructor_total} pr-4`}>
+        <div className={`${constructorStyle.costructor_total_cost} mr-10`}>
           <p className="text text_type_digits-medium mr-3">
             {totalCost ? totalCost : 0}
           </p>
