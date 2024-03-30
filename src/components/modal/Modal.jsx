@@ -7,7 +7,7 @@ import modalStyle from "./modal.module.css";
 const modalRoot = document.getElementById("react-modals");
 
 const ModalOverlay = ({ onClose, children }) => (
-  <div className="modal-overlay" onClick={onClose}>
+  <div className={modalStyle["modal-overlay"]} onClick={onClose}>
     {children}
   </div>
 );
