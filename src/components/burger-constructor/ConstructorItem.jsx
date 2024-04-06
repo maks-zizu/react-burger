@@ -1,22 +1,23 @@
 import {
   ConstructorElement,
   DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDrag } from "react-dnd";
+import PropTypes from "prop-types";
+import constructorStyle from "./constructor.module.css";
 
 function ConstructorItem({ ingredient, index, handleDelete }) {
   const [{ isDragging }, dragRef] = useDrag({
-    type: 'item',
-    item: { type: 'ingredient', id: ingredient.uniqueId, index },
+    type: "item",
+    item: { type: "ingredient", id: ingredient.uniqueId, index },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
 
   return (
-    <div ref={dragRef} className="constructor_list_item">
-      <div className="item_icon">
+    <div ref={dragRef} className={constructorStyle.constructor_list_item}>
+      <div className={constructorStyle.item_icon}>
         <DragIcon />
       </div>
       <ConstructorElement

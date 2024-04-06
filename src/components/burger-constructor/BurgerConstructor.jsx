@@ -1,23 +1,23 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import {
   CurrencyIcon,
   ConstructorElement,
   Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import './constructor.css';
-import Modal from '../modal/Modal';
-import OrderDetails from '../order-details/OrderDetails';
-import { useAppDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import constructorStyle from "./constructor.module.css";
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
+import { useAppDispatch } from "../../services/store";
+import { useSelector } from "react-redux";
 import {
   constructorBunAdd,
   constructorOtherAdd,
   constructorOtherDel,
   constructorOtherMove,
-} from '../../services/constructorIngredientsSlice';
-import { useDrop } from 'react-dnd';
-import ConstructorItem from './ConstructorItem';
-import useOrderModal from '../../hooks/useOrderModal';
+} from "../../services/constructorIngredientsSlice";
+import { useDrop } from "react-dnd";
+import ConstructorItem from "./ConstructorItem";
+import useOrderModal from "../../hooks/useOrderModal";
 
 function BurgerConstructor() {
   const dispatch = useAppDispatch();
@@ -39,18 +39,18 @@ function BurgerConstructor() {
   }, [otherIngredients, bun]);
 
   const [{ isHover }, dropTarget] = useDrop({
-    accept: 'ingredient',
+    accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop(ingredient) {
-      if (ingredient.type === 'bun') dispatch(constructorBunAdd(ingredient));
+      if (ingredient.type === "bun") dispatch(constructorBunAdd(ingredient));
       else dispatch(constructorOtherAdd(ingredient));
     },
   });
 
   const [, dropRef] = useDrop({
-    accept: 'item',
+    accept: "item",
     drop: (item, monitor) => {
       const clientOffset = monitor.getClientOffset();
       const clientY = clientOffset ? clientOffset.y : 0;
@@ -67,20 +67,23 @@ function BurgerConstructor() {
   });
 
   return (
-    <section className="constructor_section pr-4 pl-4">
-      <div className="constructor_content" ref={dropTarget}>
+    <section className={`${constructorStyle.constructor_section} pr-4 pl-4`}>
+      <div className={constructorStyle.constructor_content} ref={dropTarget}>
         {bun && (
-          <div className="constructor_element">
+          <div className={constructorStyle.constructor_element}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={bun.name}
+              text={`${bun.name} (верх)`}
               price={bun.price}
               thumbnail={bun.image}
             />
           </div>
         )}
-        <div className="constructor_element_list" ref={dropRef}>
+        <div
+          className={constructorStyle.constructor_element_list}
+          ref={dropRef}
+        >
           {otherIngredients &&
             otherIngredients.map((ingredient, index) => (
               <ConstructorItem
@@ -92,19 +95,19 @@ function BurgerConstructor() {
             ))}
         </div>
         {bun && (
-          <div className="constructor_element">
+          <div className={constructorStyle.constructor_element}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={bun.name}
+              text={`${bun.name} (низ)`}
               price={bun.price}
               thumbnail={bun.image}
             />
           </div>
         )}
       </div>
-      <div className="costructor_total pr-4">
-        <div className="costructor_total_cost mr-10">
+      <div className={`${constructorStyle.costructor_total} pr-4`}>
+        <div className={`${constructorStyle.costructor_total_cost} mr-10`}>
           <p className="text text_type_digits-medium mr-3">
             {totalCost ? totalCost : 0}
           </p>

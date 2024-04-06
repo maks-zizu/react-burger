@@ -1,27 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import './ingredients.css';
-import Modal from '../modal/Modal';
-import IngredientDetails from '../ingredient-details/IngredientDetails';
-import IngredientsList from './IngredientsList';
-import useModal from '../../hooks/useModal';
-import { filterIngredientsByType, prepareSections } from './utils';
-import { useSelector } from 'react-redux';
-import useTabNavigation from '../../hooks/useTabNavigation';
-import { throttle } from 'lodash';
-import { tabs } from './templates';
+import React, { useEffect, useMemo, useRef } from "react";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import ingredientsStyle from "./ingredients.module.css";
+import IngredientsList from "./IngredientsList";
+import { filterIngredientsByType, prepareSections } from "./utils";
+import { useSelector } from "react-redux";
+import useTabNavigation from "../../hooks/useTabNavigation";
+import { throttle } from "lodash";
+import { tabs } from "./templates";
 
 function BurgerIngredients() {
   const ingredients = useSelector((store) => store.ingredients.ingredientsData);
   const { current, scrollToSection, setRef, setCurrent, sectionRefs } =
-    useTabNavigation('bun');
-  const { isModalOpen, openModal, closeModal } = useModal();
+    useTabNavigation("bun");
   const ingredientsRef = useRef(null);
 
   const { bunIngredients, sauceIngredients, mainIngredients } = useMemo(() => {
-    const bun = filterIngredientsByType(ingredients, 'bun');
-    const sauce = filterIngredientsByType(ingredients, 'sauce');
-    const main = filterIngredientsByType(ingredients, 'main');
+    const bun = filterIngredientsByType(ingredients, "bun");
+    const sauce = filterIngredientsByType(ingredients, "sauce");
+    const main = filterIngredientsByType(ingredients, "main");
     return {
       bunIngredients: bun,
       sauceIngredients: sauce,
@@ -34,12 +30,12 @@ function BurgerIngredients() {
     [bunIngredients, sauceIngredients, mainIngredients]
   );
 
-  const handleIngredientClick = useCallback(
-    (ingredient) => {
-      openModal(ingredient);
-    },
-    [openModal]
-  );
+  // const handleIngredientClick = useCallback(
+  //   (ingredient) => {
+  //     openModal(ingredient);
+  //   },
+  //   [openModal]
+  // );
 
   useEffect(() => {
     const handleScroll = throttle(() => {
@@ -66,18 +62,18 @@ function BurgerIngredients() {
     }, 100);
 
     const currentRef = ingredientsRef.current;
-    currentRef.addEventListener('scroll', handleScroll);
+    currentRef.addEventListener("scroll", handleScroll);
 
     return () => {
       handleScroll.cancel();
-      currentRef.removeEventListener('scroll', handleScroll);
+      currentRef.removeEventListener("scroll", handleScroll);
     };
   }, [setCurrent, sectionRefs]);
 
   return (
-    <section className="ingredients_section">
+    <section className={ingredientsStyle.ingredients_section}>
       <p className="text text_type_main-large">Соберите бургер</p>
-      <div className="tabs">
+      <div className={ingredientsStyle.tabs}>
         {tabs.map((tab) => (
           <Tab
             key={tab.value}
@@ -89,22 +85,16 @@ function BurgerIngredients() {
           </Tab>
         ))}
       </div>
-      <div className="ingredients_lists" ref={ingredientsRef}>
+      <div className={ingredientsStyle.ingredients_lists} ref={ingredientsRef}>
         {sections.map(({ type, ingredients, name }) => (
           <IngredientsList
             key={type}
             listRef={setRef(type)}
             type={name}
             ingredients={ingredients}
-            handleIngredientClick={handleIngredientClick}
           />
         ))}
       </div>
-      {isModalOpen && (
-        <Modal title="Детали ингредиента" onClose={closeModal}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </section>
   );
 }

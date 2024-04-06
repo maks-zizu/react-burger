@@ -1,0 +1,40 @@
+.auth_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.auth_form-container {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  height: 430px;
+}
+
+.auth_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.auth_form > button {
+  min-width: 128px;
+}
+
+.auth_additional {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.auth_additional-text {
+  display: flex;
+  gap: 12px;
+}
+
+.auth_additional-text > button {
+  padding: 0;
+}

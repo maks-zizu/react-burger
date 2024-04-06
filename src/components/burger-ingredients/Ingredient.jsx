@@ -1,20 +1,23 @@
 import {
   Counter,
   CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import { memo, useMemo } from 'react';
-import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import ingredientsStyle from "./ingredients.module.css";
+import { Link, useLocation } from "react-router-dom";
+import { memo, useMemo } from "react";
+import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import useModal from "../../hooks/useModal";
 
-function Ingredient({ ingredient, handleIngredientClick }) {
+function Ingredient({ ingredient }) {
   const otherIngredients = useSelector(
     (store) => store.constructorIngredients.otherIngredients
   );
   const bun = useSelector((store) => store.constructorIngredients.bun);
 
   const countIngredients = useMemo(() => {
-    if (ingredient.type === 'bun') {
+    if (ingredient.type === "bun") {
       return bun && bun._id === ingredient._id ? 2 : 0;
     }
     return (
@@ -23,22 +26,36 @@ function Ingredient({ ingredient, handleIngredientClick }) {
   }, [bun, otherIngredients, ingredient._id, ingredient.type]);
 
   const [{ isDrag }, drag] = useDrag({
-    type: 'ingredient',
+    type: "ingredient",
     item: ingredient,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
   });
 
+  // const { openModal } = useModal();
+
+  const location = useLocation();
+
   return (
-    <div ref={drag} key={ingredient._id} className="ingredient_item mt-10">
+    <div
+      ref={drag}
+      key={ingredient._id}
+      className={`${ingredientsStyle.ingredient_item} mt-10`}
+    >
       <Counter count={countIngredients} size="default" />
-      <img
-        src={ingredient.image}
-        alt={ingredient.name}
-        onClick={() => handleIngredientClick(ingredient)}
-      />
-      <div className="ingredients_price m-1">
+      <Link
+        key={ingredient._id}
+        to={`/ingredients/${ingredient._id}`}
+        state={{ background: location }}
+      >
+        <img
+          src={ingredient.image}
+          alt={ingredient.name}
+          // onClick={() => openModal(ingredient)}
+        />
+      </Link>
+      <div className={`${ingredientsStyle.ingredients_price} m-1`}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
         <CurrencyIcon />
       </div>
@@ -55,7 +72,6 @@ Ingredient.propTypes = {
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,
-  handleIngredientClick: PropTypes.func.isRequired,
 };
 
 export default memo(Ingredient);

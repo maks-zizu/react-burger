@@ -1,30 +1,58 @@
+import { NavLink, useLocation } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
   ListIcon,
   ProfileIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import './header.css';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import useNavLink from "../../hooks/useNavLink";
+import headerStyle from "./header.module.css";
 
 function AppHeader() {
+  const { getIconType, isProfileActive } = useNavLink();
+  const location = useLocation();
   return (
-    <header className="header">
-      <div className="header__content">
-        <nav className="header__menu">
-          <a href="#" className="header__link header__link_active">
-            <BurgerIcon type="primary" />
+    <header className={headerStyle.header}>
+      <div className={headerStyle.header__content}>
+        <nav className={headerStyle.header__menu}>
+          <NavLink
+            to="/"
+            state={{ from: location }}
+            className={({ isActive }) =>
+              isActive
+                ? `${headerStyle.header__link} ${headerStyle.header__link_active}`
+                : `${headerStyle.header__link}`
+            }
+          >
+            <BurgerIcon type={getIconType("/")} />
             <p className="text text_type_main-default">Конструктор</p>
-          </a>
-          <a href="#" className="header__link">
-            <ListIcon type="secondary" />
+          </NavLink>
+          <NavLink
+            to="/orders"
+            state={{ from: location }}
+            className={({ isActive }) =>
+              isActive
+                ? `${headerStyle.header__link} ${headerStyle.header__link_active}`
+                : `${headerStyle.header__link}`
+            }
+          >
+            <ListIcon type={getIconType("/orders")} />
             <p className="text text_type_main-default">Лента заказов</p>
-          </a>
+          </NavLink>
         </nav>
         <Logo />
-        <a href="#" className="header__link">
-          <ProfileIcon type="secondary" />
+        <NavLink
+          to="/profile"
+          state={{ from: location }}
+          className={({ isActive }) =>
+            isActive
+              ? `${headerStyle.header__link} ${headerStyle.header__link_active}`
+              : `${headerStyle.header__link}`
+          }
+        >
+          <ProfileIcon type={isProfileActive} />
           <p className="text text_type_main-default">Личный кабинет</p>
-        </a>
+        </NavLink>
       </div>
     </header>
   );

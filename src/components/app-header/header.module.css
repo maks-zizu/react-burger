@@ -27,8 +27,5 @@
 }
 
 .header__link_active {
-  display: flex;
-  gap: 8px;
-  padding: 16px 20px;
   color: #f2f2f3;
 }

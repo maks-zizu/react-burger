@@ -38,6 +38,7 @@
 
 .ingredient_item {
   position: relative;
+  text-decoration: none;
 }
 
 .ingredients_price {
