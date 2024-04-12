@@ -19,7 +19,7 @@ function Login() {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const onHadleSubmit = async (e: FormEvent) => {
+  const onHadleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (signIn) await signIn({ email, password });
   };

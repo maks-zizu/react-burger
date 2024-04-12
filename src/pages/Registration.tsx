@@ -1,8 +1,6 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  EmailInput,
-  PasswordInput,
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -65,7 +63,7 @@ function Registration() {
     return formIsValid;
   };
 
-  const onHadleSubmit = async (e: FormEvent) => {
+  const onHadleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
       await register({ email, password, name });

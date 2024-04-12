@@ -15,7 +15,7 @@ function ForgotPassword() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onHadleSubmit = async (e: FormEvent) => {
+  const onHadleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isSend = await forgotPass({ email });
     if (isSend) navigate("/reset-password", { state: { from: location } });

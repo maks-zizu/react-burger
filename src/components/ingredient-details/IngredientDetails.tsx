@@ -13,7 +13,7 @@ function IngredientDetails() {
 
   useEffect(() => {
     setIngredient(ingredients.find(({ _id }) => _id === id));
-  }, [ingredients]);
+  }, [ingredients, id]);
 
   if (!ingredient) {
     return null;

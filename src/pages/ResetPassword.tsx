@@ -21,7 +21,7 @@ function ResetPassword() {
     navigate("/login", { state: { from: location } });
   };
 
-  const onHadleSubmit = async (e: FormEvent) => {
+  const onHadleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isSend = await resetPass({ token, password });
     if (isSend) linkToLogin();

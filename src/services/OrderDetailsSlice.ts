@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "./api";
-import { IIngredientWithUid } from "../components/burger-constructor/types";
 import { IOrderDetailsDataServer } from "./types";
 
 export const initialState: IOrderDetailsDataServer = {
