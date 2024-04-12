@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -34,7 +34,7 @@ function Profile() {
     }
   };
 
-  const onHadleSubmit = async (e: FormEvent) => {
+  const onHadleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await updateUserData({ name, email });
   };
@@ -62,7 +62,9 @@ function Profile() {
             disabled
             onBlur={onBlur}
             onIconClick={onIconClick}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           />
@@ -71,14 +73,18 @@ function Profile() {
             name={"email"}
             placeholder="Логин"
             isIcon
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
           />
           <PasswordInput
             value={password}
             name={"password"}
             placeholder="Пароль"
             icon="EditIcon"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
           />
           <div className={profileStyle["profile_form-buttons"]}>
             <Button

@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ title, onClose, children }) => {
     <ModalOverlay onClose={onClose}>
       <div
         className={`${modalStyle.modal} p-10`}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
         <div className={`${modalStyle["modal-header"]} mb-5`}>
           <p className="text text_type_main-large">{title}</p>

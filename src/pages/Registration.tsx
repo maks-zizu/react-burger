@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Input,
@@ -88,7 +88,9 @@ function Registration() {
             value={name}
             name={"name"}
             placeholder="Имя"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
             error={Boolean(errors.name)}
             errorText={errors.name}
             onPointerEnterCapture={undefined}
@@ -97,7 +99,9 @@ function Registration() {
           <Input
             value={email}
             name={"email"}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
             error={Boolean(errors.email)}
             errorText={errors.email}
             onPointerEnterCapture={undefined}
@@ -106,7 +110,9 @@ function Registration() {
           <Input
             value={password}
             name={"password"}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
             error={Boolean(errors.password)}
             errorText={errors.password}
             onPointerEnterCapture={undefined}

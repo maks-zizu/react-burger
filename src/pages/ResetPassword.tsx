@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   PasswordInput,
@@ -39,13 +39,17 @@ function ResetPassword() {
             value={password}
             name={"password"}
             placeholder="Введите новый пароль"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
           />
           <Input
             value={token}
             name={"token"}
             placeholder="Введите код из письма"
-            onChange={(e) => setToken(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setToken(e.target.value)
+            }
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           />
