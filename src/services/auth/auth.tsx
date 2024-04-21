@@ -101,6 +101,8 @@ export function useProvideAuth() {
         if (newAccessToken) res = await getUser();
       }
       if (!res.ok) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         const { message } = await res.json();
         if (message) {
           throw new Error(message);
