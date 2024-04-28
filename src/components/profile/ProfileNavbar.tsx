@@ -36,10 +36,10 @@ function ProfileNavbar() {
             <p className="text text_type_main-medium">Профиль</p>
           </Link>
           <Link
-            to="/profile/order"
+            to="/profile/orders"
             state={{ from: location }}
             className={
-              useMatch("/profile/order")
+              useMatch("/profile/orders")
                 ? `${profileNavbarStyle.profile__link} ${profileNavbarStyle.profile__link_active}`
                 : `${profileNavbarStyle.profile__link}`
             }

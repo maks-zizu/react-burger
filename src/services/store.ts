@@ -4,6 +4,7 @@ import ingredientsSlice from "./ingredientsSlice";
 import constructorIngredientsSlice from "./constructorIngredientsSlice";
 import ingredientDetailsSlice from "./ingredientDetailsSlice";
 import orderDetailsSlice from "./OrderDetailsSlice";
+import websocketSlice from "./websocket/websocketSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     constructorIngredients: constructorIngredientsSlice,
     ingredientDetails: ingredientDetailsSlice,
     OrderDetails: orderDetailsSlice,
+    websocket: websocketSlice,
   },
 });
 
