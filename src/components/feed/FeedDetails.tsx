@@ -72,30 +72,32 @@ function FeedDetails() {
   }
 
   return (
-    <div className={feedDetailsStyle.feed_details}>
-      <div>
+    <div className={feedDetailsStyle.details_container}>
+      <div className={feedDetailsStyle.details}>
         <p className="text text_type_digits-default mb-10">{`#${order.number}`}</p>
         <p className="text text_type_main-medium mb-3">{order.name}</p>
         <p className="text text_type_main-default mb-15">
           {Status[order.status as keyof typeof Status]}
         </p>
         <p className="text text_type_main-medium mb-6">Состав:</p>
-        <div className={`${feedDetailsStyle.feed_details_list} mb-10`}>
+        <div className={`${feedDetailsStyle.details_list} mb-10`}>
           {orderIngredients.map((ing) => (
-            <div key={ing._id} className={feedDetailsStyle.feed_item_order}>
-              <div className={feedDetailsStyle.image_container}>
-                <div
-                  style={{
-                    backgroundImage: `url(${ing.image})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "112px 64px",
-                    backgroundPosition: "center",
-                  }}
-                  className={feedDetailsStyle.feed_item_img}
-                />
+            <div key={ing._id} className={feedDetailsStyle.details_item}>
+              <div className={feedDetailsStyle.details_item_name}>
+                <div className={feedDetailsStyle.details_image_container}>
+                  <div
+                    style={{
+                      backgroundImage: `url(${ing.image})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "112px 64px",
+                      backgroundPosition: "center",
+                    }}
+                    className={feedDetailsStyle.details_item_img}
+                  />
+                </div>
+                <p className="text text_type_main-default">{ing.name}</p>
               </div>
-              <p className="text text_type_main-default">{ing.name}</p>
-              <div className={feedDetailsStyle.feed_item_price}>
+              <div className={feedDetailsStyle.details_item_price}>
                 <p className="text text_type_digits-default">{ing.count}</p>
                 <p className="text text_type_digits-default">x</p>
                 <p className="text text_type_digits-default">{ing.price}</p>
@@ -107,11 +109,11 @@ function FeedDetails() {
             </div>
           ))}
         </div>
-        <div className={feedDetailsStyle.feed_item_price}>
+        <div className={feedDetailsStyle.details_price}>
           <p className="text text_type_main-default text_color_inactive">
             {formatDate(order.createdAt)}
           </p>
-          <div className={feedDetailsStyle.feed_item_total}>
+          <div className={feedDetailsStyle.details_total}>
             <p className="text text_type_digits-default">
               {orderIngredients.reduce((acc, item) => acc + item.totalPrice, 0)}
             </p>
