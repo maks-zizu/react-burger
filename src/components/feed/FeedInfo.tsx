@@ -12,11 +12,12 @@ function FeedInfo() {
         <div className={feedMainStyle.feed_info_orders}>
           <p className="text text_type_main-medium mb-6">Готовы:</p>
           <div className={feedMainStyle.feed_info_orders_list}>
-            {orders
+            {(orders || [])
               .slice(0, 10)
               .filter((order) => order.status === "done")
               .map((el) => (
                 <p
+                  key={el._id}
                   style={{ color: "rgb(0, 204, 204)" }}
                   className="text text_type_digits-default mb-2"
                 >
@@ -28,11 +29,11 @@ function FeedInfo() {
         <div className={feedMainStyle.feed_info_orders}>
           <p className="text text_type_main-medium mb-6">В работе:</p>
           <div className={feedMainStyle.feed_info_orders_list}>
-            {orders
+            {(orders || [])
               .slice(0, 10)
               .filter((order) => order.status === "pending")
               .map((el) => (
-                <p className="text text_type_digits-default mb-2">
+                <p key={el._id} className="text text_type_digits-default mb-2">
                   {el.number}
                 </p>
               ))}

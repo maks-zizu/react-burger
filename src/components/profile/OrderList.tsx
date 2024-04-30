@@ -31,7 +31,7 @@ function OrderList() {
   return (
     <div className={orderListStyle.order_list_content}>
       <div className={orderListStyle.order_list}>
-        {reversedOrders.map((order) => (
+        {(reversedOrders || []).map((order) => (
           <OrderItem key={order._id} order={order} />
         ))}
       </div>

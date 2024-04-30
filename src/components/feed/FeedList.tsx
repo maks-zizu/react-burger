@@ -27,7 +27,7 @@ function FeedList() {
     <section className={feedListStyle.feed_section}>
       <p className="text text_type_main-large">Лента заказов</p>
       <div className={feedListStyle.feed_list_orders}>
-        {orders.map((order) => (
+        {(orders || []).map((order) => (
           <FeedItem key={order._id} order={order} />
         ))}
       </div>
