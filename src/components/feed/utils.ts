@@ -21,3 +21,9 @@ export function formatDate(date: string | number | Date) {
 
   return `${dateStr}, ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
+
+export enum Status {
+  pending = "Готовится",
+  done = "Выполнен",
+  created = "Отменён",
+}

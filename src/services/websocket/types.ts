@@ -1,3 +1,8 @@
+import {
+  ActionCreatorWithPayload,
+  ActionCreatorWithoutPayload,
+} from "@reduxjs/toolkit";
+
 export interface Order {
   _id: string;
   name: string;
@@ -8,7 +13,26 @@ export interface Order {
   updatedAt: string;
 }
 
-export interface WebSocketState {
+export interface OrdersAll {
+  success: boolean;
   orders: Order[];
-  status: "idle" | "connected" | "disconnected";
+  total: number;
+  totalToday: number;
 }
+
+export interface WebSocketState {
+  ordersAll: OrdersAll;
+  status: "connecting" | "connected" | "disconnected";
+  connectionError: string | null;
+}
+
+export type TwsActionTypes = {
+  wsConnect: ActionCreatorWithPayload<string>;
+  wsDisconnect: ActionCreatorWithoutPayload;
+  wsSendMessage?: ActionCreatorWithPayload<any>;
+  wsConnecting: ActionCreatorWithoutPayload;
+  onOpen: ActionCreatorWithoutPayload;
+  onClose: ActionCreatorWithoutPayload;
+  onError: ActionCreatorWithPayload<string>;
+  onMessage: ActionCreatorWithPayload<any>;
+};

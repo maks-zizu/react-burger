@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import feedDetailsStyle from "./styles/feedDetails.module.css";
-import { useParams } from "react-router-dom";
-import { RootState, useAppSelector } from "../../services/store";
+import { useLocation, useParams } from "react-router-dom";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../services/store";
 import { IIngredient } from "../burger-constructor/types";
 import { Order } from "../../services/websocket/types";
-import { formatDate } from "./utils";
+import { Status, formatDate } from "./utils";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
-export enum Status {
-  in_progress = "Готовится",
-  done = "Выполнен",
-  error = "Отменён",
-}
+import { BASE_WSS_URL } from "../../services/websocket/template";
+import { connect } from "../../services/websocket/actions";
 
 interface IOrderIngredient extends IIngredient {
   count: number;
@@ -19,7 +19,9 @@ interface IOrderIngredient extends IIngredient {
 }
 
 function FeedDetails() {
+  const dispatch = useAppDispatch();
   const { id } = useParams();
+  const location = useLocation();
   const [orderIngredients, setOrderIngredients] = useState<IOrderIngredient[]>(
     []
   );
@@ -28,7 +30,21 @@ function FeedDetails() {
     (store) => store.ingredients.ingredientsData
   );
 
-  const orders = useAppSelector((state: RootState) => state.websocket.orders);
+  const isModal = location.state && location.state.background;
+
+  const { orders } = useAppSelector(
+    (state: RootState) => state.websocketAll.ordersAll
+  );
+
+  const accessToken = localStorage
+    .getItem("accessToken")
+    ?.replace("Bearer ", "");
+
+  useEffect(() => {
+    if (location.pathname.includes("profile"))
+      dispatch(connect(`${BASE_WSS_URL}?token=${accessToken}`));
+    else dispatch(connect(`${BASE_WSS_URL}/all`));
+  }, [accessToken, dispatch, location.pathname]);
 
   useEffect(() => {
     if (order && ingredients.length > 0) {
@@ -72,11 +88,18 @@ function FeedDetails() {
   }
 
   return (
-    <div className={feedDetailsStyle.details_container}>
+    <div
+      className={`${feedDetailsStyle.details_container} ${
+        isModal ? "modal" : "page"
+      }`}
+    >
       <div className={feedDetailsStyle.details}>
         <p className="text text_type_digits-default mb-10">{`#${order.number}`}</p>
         <p className="text text_type_main-medium mb-3">{order.name}</p>
-        <p className="text text_type_main-default mb-15">
+        <p
+          style={{ color: "rgb(0, 204, 204)" }}
+          className="text text_type_main-default mb-15"
+        >
           {Status[order.status as keyof typeof Status]}
         </p>
         <p className="text text_type_main-medium mb-6">Состав:</p>

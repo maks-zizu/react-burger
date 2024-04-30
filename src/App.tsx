@@ -18,20 +18,11 @@ import OrderList from "./components/profile/OrderList";
 import { ProtectedRoute } from "./services/auth/auth";
 import FeedMain from "./components/feed/FeedMain";
 import FeedDetails from "./components/feed/FeedDetails";
-import { websocketService } from "./services/websocket/websocketService";
 
 function App(): ReactElement {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(ingredientsInit());
-  }, []);
-
-  useEffect(() => {
-    websocketService.connect("wss://norma.nomoreparties.space/orders/all");
-
-    return () => {
-      websocketService.disconnect();
-    };
   }, []);
 
   const location = useLocation();
@@ -51,6 +42,10 @@ function App(): ReactElement {
         <Route path="/" element={<BurgerMain />} />
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/feed/:id" element={<FeedDetails />} />
+        <Route
+          path="/profile/orders/:id"
+          element={<ProtectedRoute children={<FeedDetails />} />}
+        />
         <Route
           path="/register"
           element={<ProtectedRoute children={<Registration />} anonymous />}
@@ -103,10 +98,20 @@ function App(): ReactElement {
           />
         </Routes>
       )}
+      {background && (
+        <Routes>
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <FeedDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }
-
-// <ProtectedRoute children={<OrderList />} />
 
 export default App;

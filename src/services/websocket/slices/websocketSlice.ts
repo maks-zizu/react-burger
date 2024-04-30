@@ -1,17 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Order, WebSocketState } from "./types";
+import { OrdersAll, WebSocketState } from "../types";
+
+// !!! НЕ УЧАВСТВУЕТ В КОДЕ ---> смотри websocketAllSlice !!! ОСТАВИЛ ДЛЯ СЕБЯ, ЧТОБЫ ПОДСМАТРИВАТЬ НА ДРУГИХ ПРОЕКТАХ !!!
 
 const initialState: WebSocketState = {
-  orders: [],
-  status: "idle",
+  ordersAll: {
+    success: false,
+    orders: [],
+    total: 0,
+    totalToday: 0,
+  },
+  status: "connecting",
+  connectionError: null,
 };
 
 const websocketSlice = createSlice({
   name: "websocket",
   initialState,
   reducers: {
-    ordersReceived(state, action: PayloadAction<Order[]>) {
-      state.orders = action.payload;
+    ordersReceived(state, action: PayloadAction<OrdersAll>) {
+      state.ordersAll = action.payload;
     },
     websocketConnected(state) {
       state.status = "connected";
