@@ -1,7 +1,10 @@
 .profile__navbar {
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  margin-top: 120px;
+  justify-content: start;
+  margin: 40px auto;
+  width: 1280px;
+  padding: 0 20px;
   gap: 60px;
 }
 
@@ -9,6 +12,8 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  flex-shrink: 0;
+  margin: 80px 0;
   width: 320px;
   gap: 80px;
 }

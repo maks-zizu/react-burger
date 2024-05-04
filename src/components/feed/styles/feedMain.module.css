@@ -1,0 +1,37 @@
+.feed_main {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  gap: 60px;
+}
+
+.feed_info {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  width: 580px;
+  padding-top: 60px;
+}
+
+.feed_info_container {
+  display: grid;
+  height: 210px;
+  justify-content: start;
+  grid-template-columns: repeat(2, 272px);
+  grid-auto-rows: auto;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.feed_info_orders {
+  gap: 36px;
+}
+
+.feed_info_orders_list {
+  display: grid;
+  grid-template-columns: repeat(2, 130px);
+  grid-auto-rows: auto;
+}

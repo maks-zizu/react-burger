@@ -58,7 +58,7 @@ function Profile() {
             placeholder="Имя"
             icon="EditIcon"
             ref={inputRef}
-            type={"text"}
+            type="text"
             disabled
             onBlur={onBlur}
             onIconClick={onIconClick}

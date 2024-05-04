@@ -29,7 +29,7 @@ function AppHeader() {
             <p className="text text_type_main-default">Конструктор</p>
           </NavLink>
           <NavLink
-            to="/orders"
+            to="/feed"
             state={{ from: location }}
             className={({ isActive }) =>
               isActive
@@ -37,7 +37,7 @@ function AppHeader() {
                 : `${headerStyle.header__link}`
             }
           >
-            <ListIcon type={getIconType("/orders")} />
+            <ListIcon type={getIconType("/feed")} />
             <p className="text text_type_main-default">Лента заказов</p>
           </NavLink>
         </nav>

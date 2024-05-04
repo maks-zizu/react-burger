@@ -16,6 +16,8 @@ import { ingredientsInit } from "./services/ingredientsSlice";
 import ProfileNavbar from "./components/profile/ProfileNavbar";
 import OrderList from "./components/profile/OrderList";
 import { ProtectedRoute } from "./services/auth/auth";
+import FeedMain from "./components/feed/FeedMain";
+import FeedDetails from "./components/feed/FeedDetails";
 
 function App(): ReactElement {
   const dispatch = useAppDispatch();
@@ -39,6 +41,11 @@ function App(): ReactElement {
       <Routes location={background || location}>
         <Route path="/" element={<BurgerMain />} />
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
+        <Route path="/feed/:id" element={<FeedDetails />} />
+        <Route
+          path="/profile/orders/:id"
+          element={<ProtectedRoute children={<FeedDetails />} />}
+        />
         <Route
           path="/register"
           element={<ProtectedRoute children={<Registration />} anonymous />}
@@ -61,11 +68,11 @@ function App(): ReactElement {
         >
           <Route index element={<ProtectedRoute children={<Profile />} />} />
           <Route
-            path="order"
+            path="orders"
             element={<ProtectedRoute children={<OrderList />} />}
           />
         </Route>
-        <Route path="/orders" element={<OrderList />} />
+        <Route path="/feed" element={<FeedMain />} />
       </Routes>
       {background && (
         <Routes>
@@ -79,10 +86,32 @@ function App(): ReactElement {
           />
         </Routes>
       )}
+      {background && (
+        <Routes>
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <FeedDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
+      {background && (
+        <Routes>
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <FeedDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }
-
-// <ProtectedRoute children={<OrderList />} />
 
 export default App;
