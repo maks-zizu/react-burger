@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <SnackbarProvider />
-    <BrowserRouter>
+    <BrowserRouter basename="/react-burger">
       <ProvideAuth>
         <Provider store={store}>
           <App />
