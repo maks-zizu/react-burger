@@ -9,7 +9,7 @@ function OrderDetails() {
   return (
     <div className={`${orderDetailsStyle.order_details} mt-8 mb-8`}>
       {orderDetailsData?.order?.number ? (
-        <p className="text text_type_digits-large">
+        <p data-test="order-number" className="text text_type_digits-large">
           {orderDetailsData.order.number}
         </p>
       ) : (

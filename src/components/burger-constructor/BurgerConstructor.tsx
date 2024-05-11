@@ -76,8 +76,15 @@ function BurgerConstructor() {
   });
 
   return (
-    <section className={`${constructorStyle.constructor_section} pr-4 pl-4`}>
-      <div className={constructorStyle.constructor_content} ref={dropTarget}>
+    <section
+      data-test="constructor"
+      className={`${constructorStyle.constructor_section} pr-4 pl-4`}
+    >
+      <div
+        data-test="drop-area"
+        className={constructorStyle.constructor_content}
+        ref={dropTarget}
+      >
         {bun && (
           <div className={constructorStyle.constructor_element}>
             <ConstructorElement
@@ -123,6 +130,7 @@ function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </div>
         <Button
+          data-test="order-button"
           disabled={!otherIngredients.length && !bun}
           htmlType="button"
           type="primary"
@@ -132,7 +140,7 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
         {isModalOpen && (
-          <Modal onClose={closeModal}>
+          <Modal data-test="modal" onClose={closeModal}>
             <OrderDetails />
           </Modal>
         )}

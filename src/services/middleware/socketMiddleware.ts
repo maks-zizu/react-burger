@@ -13,6 +13,7 @@ export const socketMiddleware = (
     let url = "";
 
     return (next) => (action) => {
+      console.log("🚀🚀 🚀  ~ return ~ action:", action);
       const { dispatch } = store;
       const {
         wsConnect,

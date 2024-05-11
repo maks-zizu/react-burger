@@ -8,7 +8,7 @@ import { socketMiddleware } from "./middleware/socketMiddleware";
 import { websocketAllReducer } from "./websocket/slices/websocketAllSlice";
 import { wsActions } from "./template";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ingredients: ingredientsSlice,
   constructorIngredients: constructorIngredientsSlice,
   ingredientDetails: ingredientDetailsSlice,
