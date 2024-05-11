@@ -34,12 +34,17 @@ const Modal: React.FC<ModalProps> = ({ title, onClose, children }) => {
   return ReactDOM.createPortal(
     <ModalOverlay onClose={onClose}>
       <div
+        data-test="modal"
         className={`${modalStyle.modal} p-10`}
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
         <div className={`${modalStyle["modal-header"]} mb-5`}>
           <p className="text text_type_main-large">{title}</p>
-          <div className={modalStyle["modal-close"]} onClick={onClose}>
+          <div
+            className={modalStyle["modal-close"]}
+            data-test="modal-close"
+            onClick={onClose}
+          >
             <CloseIcon type="primary" />
           </div>
         </div>

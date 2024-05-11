@@ -14,7 +14,10 @@ function IngredientsList({ type, ingredients, listRef }: IngredientsListProps) {
       <p className="text text_type_main-medium">{type}</p>
       <div className={ingredientsStyle.ingredients_list_items}>
         {ingredients.map((ingredient) => (
-          <Ingredient key={ingredient._id} ingredient={ingredient} />
+          <Ingredient
+            key={ingredient._id}
+            ingredient={ingredient}
+          />
         ))}
       </div>
     </div>

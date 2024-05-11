@@ -39,6 +39,7 @@ function Ingredient({ ingredient }: { ingredient: IIngredient }) {
 
   return (
     <div
+      data-test={`ingredient-${ingredient.type}`}
       ref={drag}
       key={ingredient._id}
       className={`${ingredientsStyle.ingredient_item} mt-10`}
